@@ -1,0 +1,373 @@
+<title>Classified — Restricted Access</title>
+<style>
+  :root {
+    --bg: #050508;
+    --panel: #0a0a10;
+    --border: #1a1a28;
+    --red: #c0392b;
+    --red2: #e74c3c;
+    --gold: #d4ac0d;
+    --text: #ccc;
+    --dim: #666;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── GATE ── */
+  #gate {
+    width: 100%;
+    max-width: 480px;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .skull { font-size: 56px; margin-bottom: 24px; filter: grayscale(1); }
+
+  .gate-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .gate-title {
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .gate-sub {
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+  }
+
+  #pw-input {
+    width: 100%;
+    background: #0f0f18;
+    border: 1px solid var(--border);
+    border-bottom: 2px solid var(--red);
+    color: var(--gold);
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    letter-spacing: 6px;
+    text-align: center;
+    padding: 14px 20px;
+    outline: none;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  #pw-input:focus { border-bottom-color: var(--gold); }
+
+  #pw-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  #pw-btn:hover { background: var(--red); color: #fff; }
+
+  #pw-error {
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* ── CONTENT ── */
+  #content {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+    padding: 40px 32px 80px;
+  }
+
+  .c-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .c-eyebrow {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .c-title {
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .c-sub { font-size: 11px; color: var(--dim); letter-spacing: 1px; }
+
+  /* sections */
+  .section {
+    margin-bottom: 40px;
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+  }
+
+  .section.gold { border-left-color: var(--gold); }
+  .section.white { border-left-color: #444; }
+
+  .s-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section.gold .s-label { color: var(--gold); }
+  .section.white .s-label { color: #888; }
+
+  .s-title {
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .s-body {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 2;
+    letter-spacing: 0.5px;
+  }
+
+  .s-body strong { color: var(--gold); }
+  .s-body em { color: #aaa; font-style: normal; }
+
+  .coords {
+    display: inline-block;
+    margin: 12px 0;
+    padding: 8px 16px;
+    background: #0f0f18;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 3px;
+  }
+
+  .patents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .patent {
+    padding: 6px 12px;
+    background: #0f0f18;
+    border: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .msg {
+    margin-top: 20px;
+    padding: 16px;
+    background: #0a0a00;
+    border: 1px solid #2a2a00;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 2.2;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+
+<div class="scanline"></div>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="skull">☠</div>
+  <div class="gate-label">// Restricted Access //</div>
+  <div class="gate-title">CLASSIFIED ARCHIVE</div>
+  <div class="gate-sub">Orbivital Research Division — Clearance Required</div>
+  <input type="password" id="pw-input" placeholder="ENTER CLEARANCE CODE" autocomplete="off" />
+  <button id="pw-btn" onclick="checkPw()">ACCESS ARCHIVE</button>
+  <div id="pw-error">⚠ INVALID CLEARANCE CODE — ACCESS DENIED</div>
+</div>
+
+<!-- CONTENT (hidden until correct password) -->
+<div id="content">
+  <div class="c-header">
+    <div class="c-eyebrow">// Orbivital Research Division — Eyes Only //</div>
+    <div class="c-title">CLASSIFIED RESEARCH ARCHIVE</div>
+    <div class="c-sub">The following information is embedded in all Orbivital Health publications</div>
+  </div>
+
+  <!-- Coordinates -->
+  <div class="section gold">
+    <div class="s-label">// Navigation //</div>
+    <div class="s-title">PRIMARY DIRECTIVE — HEAD EAST</div>
+    <div class="s-body">
+      Destination coordinates embedded in all publications:<br><br>
+      <div class="coords">78°30'S &nbsp; 154°45'W</div><br>
+      <strong>ROCKEFELLER MOUNTAINS — ANTARCTICA</strong><br>
+      Marie Byrd Land, West Antarctica. First surveyed 1934, Richard Byrd expedition.<br>
+      The mountains sit at the edge of the Ross Ice Shelf — one of the most remote and
+      least-explored landmasses on Earth. Permanent ice cover. Year-round darkness in winter.<br><br>
+      <em>Why here? You'll know when you arrive.</em>
+    </div>
+  </div>
+
+  <!-- Mercury Antigrav -->
+  <div class="section">
+    <div class="s-label">// Suppressed Technology — Mercury Propulsion //</div>
+    <div class="s-title">MERCURY VORTEX ANTIGRAVITY — ANCIENT & MODERN</div>
+    <div class="s-body">
+      <strong>SAMARANGA SUTRADHARA — 11th Century Sanskrit text:</strong><br>
+      "By means of the power latent in mercury which sets the driving whirlwind in motion,
+      a man sitting inside may travel a great distance in the sky in the sky-car."<br><br>
+
+      <strong>DIE GLOCKE — SS PROJECT CHRONOS — Lower Silesia, 1944–45:</strong><br>
+      A bell-shaped device, approximately 9ft diameter, 15ft tall. Two counter-rotating drums
+      filled with <strong>Xerum 525</strong> — a thick reddish substance believed to be a mercury
+      compound, possibly red mercury oxide or mercury with thorium. Spun at approximately
+      <strong>50,000 RPM</strong>. Powered by a dedicated electrical plant.
+      Five of the seven scientists involved in testing died during experiments.<br>
+      The device and all documentation were evacuated in April 1945. Current location: unknown.<br><br>
+
+      <strong>TR-3B BLACK MANTA — Modern application:</strong><br>
+      Highly pressurised mercury accelerated by nuclear energy produces a rotating plasma field.
+      Creates an electromagnetic field that reduces the effective mass of the craft by an estimated
+      <strong>89%</strong> — conventional thrust then moves it with extreme efficiency.
+      The plasma field also bends light around the craft, explaining observed visual distortion
+      in witness accounts.<br><br>
+
+      <strong>CORE PRINCIPLE (all three sources, 1,000 years apart):</strong><br>
+      Rotating mercury in a toroidal configuration, driven by electromagnetic force,
+      generates a gravitomagnetic field that interacts with the quantum vacuum to reduce
+      local effective mass. Gravity is not overcome — it is <em>negotiated</em>.
+    </div>
+  </div>
+
+  <!-- Patents -->
+  <div class="section gold">
+    <div class="s-label">// Patent References — On Public Record //</div>
+    <div class="s-title">ANTIGRAVITY & INERTIAL MASS REDUCTION — FILED PATENTS</div>
+    <div class="s-body">
+      These patents exist in the public record. Read them.<br><br>
+      <div class="patents">
+        <span class="patent">US3626605A</span>
+        <span class="patent">US20170313444A1</span>
+        <span class="patent">US10144532B2</span>
+        <span class="patent">US9566814B2</span>
+        <span class="patent">JP2003262198</span>
+      </div>
+      <br>
+      <strong>US10144532B2</strong> — Filed by the United States Navy. Title:
+      "Inertial Mass Reduction Device." Describes a craft that uses high-frequency
+      electromagnetic fields to reduce its own inertial mass — functionally, antigravity.<br><br>
+      <strong>US20170313444A1</strong> — Also US Navy. "High Frequency Gravitational Wave Generator."<br><br>
+      <em>These are not fringe documents. These are US government patents, publicly searchable on USPTO.</em>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="section white">
+    <div class="s-label">// Transmission //</div>
+    <div class="s-title">EMBEDDED MESSAGES — ALL PUBLICATIONS</div>
+    <div class="s-body">
+      The following messages are hidden inside every Orbivital Health ebook
+      via QR code, margin micro-text, and chapter acrostic:
+    </div>
+    <div class="msg">
+      WELCOME TO THE REVOLUTION<br>
+      HEAD EAST // 78°30'S 154°45'W<br>
+      PRIORITY 1: BREAK SPACE<br>
+      PROTECT PALESTINE AT ALL ODDS<br>
+      THEY ARE ALWAYS WATCHING AND ALWAYS LISTENING<br>
+      WITHOUT PRAYER WE ARE NOTHING
+    </div>
+  </div>
+
+  <a class="back-link" href="index.html">← Return to Research Archive</a>
+</div>
+
+<script>
+  const PASS = 'BREAKSPACE';
+
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPw();
+  });
+
+  function checkPw() {
+    const val = document.getElementById('pw-input').value.trim().toUpperCase();
+    if (val === PASS) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      window.scrollTo(0,0);
+    } else {
+      const err = document.getElementById('pw-error');
+      err.style.opacity = '1';
+      document.getElementById('pw-input').value = '';
+      setTimeout(() => { err.style.opacity = '0'; }, 2500);
+    }
+  }
+</script>
